@@ -11,6 +11,7 @@ from pathlib import Path
 from models import Card, DeckMetadata
 from fsrs import FSRS6Scheduler
 from persistence import PersistenceManager
+from user_settings import UserSettings
 from gui import LoginScreen, MainMenu, PracticeView, StatsView
 
 
@@ -29,6 +30,7 @@ class FlashcardApp:
         # Initialize components
         self.scheduler = FSRS6Scheduler()
         self.persistence = PersistenceManager()
+        self.settings: UserSettings = None
         
         # Application state
         self.current_user: str = None
@@ -62,6 +64,14 @@ class FlashcardApp:
         # Create user if doesn't exist
         if not self.persistence.user_exists(username):
             self.persistence.create_user(username)
+        
+        # Load user settings
+        self.settings = UserSettings(username)
+        
+        # Apply settings to scheduler
+        intensity = self.settings.effective_intensity()
+        retention = self.settings.request_retention
+        self.scheduler.set_intensity(intensity, retention)
         
         # Load deck
         self.load_deck()
@@ -187,8 +197,21 @@ class FlashcardApp:
             self.root,
             cards=self.cards,
             deck_metadata=self.deck_metadata,
-            on_back=self.show_main_menu
+            scheduler=self.scheduler,
+            settings=self.settings,
+            on_back=self.show_main_menu,
+            on_intensity_changed=self.handle_intensity_changed
         )
+    
+    def handle_intensity_changed(self):
+        """Handle intensity change from settings."""
+        # Reload settings and update scheduler
+        intensity = self.settings.effective_intensity()
+        retention = self.settings.request_retention
+        self.scheduler.set_intensity(intensity, retention)
+        
+        # Return to main menu
+        self.show_main_menu()
     
     def run(self):
         """Run the application."""
