@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Flashcard App - FSRS-6 Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .screenshot {
+            max-width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .feature {
+            margin: 15px 0;
+        }
+        .feature h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .feature ul {
+            line-height: 1.8;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .mockup {
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            background: #fff;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .mockup-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .mockup-content {
+            text-align: center;
+            padding: 40px;
+        }
+        .card-display {
+            background: #f8f9fa;
+            border: 3px solid #333;
+            border-radius: 8px;
+            padding: 60px;
+            margin: 20px auto;
+            font-size: 72px;
+            max-width: 400px;
+            text-align: center;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            margin: 10px;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .button.danger {
+            background: #dc3545;
+        }
+        .button.success {
+            background: #28a745;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🇯🇵 Japanese Flashcard App with FSRS-6</h1>
+    
+    <div class="section">
+        <h2>Application Overview</h2>
+        <p>A Tkinter-based flashcard application implementing the FSRS-6 (Free Spaced Repetition Scheduler) algorithm for learning Japanese hiragana characters. The application features binary grading (Again/Good), persistent user data, and comprehensive statistics.</p>
+    </div>
+
+    <div class="section">
+        <h2>Screen 1: Login Screen</h2>
+        <div class="mockup">
+            <div class="mockup-title">Japanese Flashcard App</div>
+            <div class="mockup-content">
+                <p style="font-size: 16px; margin: 20px 0;"><strong>Username:</strong> <input type="text" value="test_user" style="padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;"></p>
+                <button class="button">Login</button>
+                <p style="margin-top: 30px; color: #666; font-size: 14px;">Existing users: test_user, student1, alice</p>
+            </div>
+        </div>
+        <p><strong>Features:</strong></p>
+        <ul>
+            <li>Simple username-based login</li>
+            <li>Shows existing users for convenience</li>
+            <li>Creates new user profile if username doesn't exist</li>
+            <li>Each user has independent progress tracking</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Screen 2: Main Menu</h2>
+        <div class="mockup">
+            <div class="mockup-title">Welcome, test_user!</div>
+            <div class="mockup-content">
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px auto; max-width: 400px;">
+                    <h3 style="margin-top: 0;">Today's Progress</h3>
+                    <p>Cards reviewed today: <strong>15 / 20</strong></p>
+                    <p>Cards due for review: <strong>8</strong></p>
+                    <p>Total cards in deck: <strong>46</strong></p>
+                </div>
+                <button class="button" style="display: block; margin: 10px auto; width: 200px;">Practice Cards</button>
+                <button class="button" style="display: block; margin: 10px auto; width: 200px;">View Stats</button>
+            </div>
+        </div>
+        <p><strong>Features:</strong></p>
+        <ul>
+            <li>Daily progress summary</li>
+            <li>Shows cards reviewed vs daily limit</li>
+            <li>Displays number of cards due for review</li>
+            <li>Quick access to practice and stats</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Screen 3: Practice View (Question)</h2>
+        <div class="mockup">
+            <div style="text-align: center; color: #666; margin-bottom: 10px;">Card 1 of 8</div>
+            <div class="card-display">あ</div>
+            <div class="mockup-content">
+                <button class="button">Show Answer [Space]</button>
+            </div>
+        </div>
+        <p><strong>Features:</strong></p>
+        <ul>
+            <li>Large, clear display of Japanese character</li>
+            <li>Progress indicator (Card X of Y)</li>
+            <li>Keyboard shortcut support (Space to reveal)</li>
+            <li>Clean, distraction-free interface</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Screen 4: Practice View (Answer)</h2>
+        <div class="mockup">
+            <div style="text-align: center; color: #666; margin-bottom: 10px;">Card 1 of 8</div>
+            <div class="card-display">あ</div>
+            <div style="text-align: center; color: #007bff; font-size: 28px; margin: 20px 0;">
+                Answer: <strong>a</strong>
+            </div>
+            <div class="mockup-content">
+                <button class="button danger">Again [1]</button>
+                <button class="button success">Good [2]</button>
+            </div>
+        </div>
+        <p><strong>Features:</strong></p>
+        <ul>
+            <li>Binary grading system (Again/Good)</li>
+            <li>Answer displayed in blue for clarity</li>
+            <li>Keyboard shortcuts for quick grading (1 = Again, 2 = Good)</li>
+            <li>Color-coded buttons (red for Again, green for Good)</li>
+        </ul>
+        <p><strong>FSRS-6 Scheduling:</strong></p>
+        <ul>
+            <li><strong>Again:</strong> Card difficulty increases, stability decreases, shorter review interval</li>
+            <li><strong>Good:</strong> Card difficulty decreases, stability increases, longer review interval</li>
+            <li>Cards automatically scheduled based on FSRS-6 algorithm</li>
+            <li>Each card tracked with stability (S), difficulty (D), interval, and lapse count</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Screen 5: Statistics View</h2>
+        <div class="mockup">
+            <div class="mockup-title">Statistics & Insights</div>
+            <div class="mockup-content" style="text-align: left;">
+                <h3>Deck Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">Total Cards</div>
+                        <div class="stat-value">46</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">New Cards</div>
+                        <div class="stat-value">15</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Learning</div>
+                        <div class="stat-value">8</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Review</div>
+                        <div class="stat-value">23</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Relearning</div>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Average Difficulty</div>
+                        <div class="stat-value">5.2 / 10</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Average Stability</div>
+                        <div class="stat-value">4.8 days</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Total Lapses</div>
+                        <div class="stat-value">12</div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px;">Daily Progress</h3>
+                <div class="stat-item">
+                    <div class="stat-label">Today's Reviews</div>
+                    <div class="stat-value">15 / 20</div>
+                </div>
+                
+                <h3 style="margin-top: 30px;">Recent Activity</h3>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                    <p style="margin: 5px 0;">2025-11-09: <strong>15 cards</strong></p>
+                    <p style="margin: 5px 0;">2025-11-08: <strong>18 cards</strong></p>
+                    <p style="margin: 5px 0;">2025-11-07: <strong>20 cards</strong></p>
+                    <p style="margin: 5px 0;">2025-11-06: <strong>12 cards</strong></p>
+                </div>
+                
+                <button class="button" style="margin-top: 30px;">Back to Menu</button>
+            </div>
+        </div>
+        <p><strong>Features:</strong></p>
+        <ul>
+            <li>Comprehensive deck statistics</li>
+            <li>Card state breakdown (New, Learning, Review, Relearning)</li>
+            <li>Average difficulty and stability metrics</li>
+            <li>Daily progress tracking</li>
+            <li>Recent activity history (last 7 days)</li>
+            <li>Total lapse count for monitoring difficult cards</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Technical Implementation</h2>
+        <div class="feature">
+            <h3>FSRS-6 Algorithm</h3>
+            <ul>
+                <li><strong>Stability (S):</strong> Time in days until card is likely to be forgotten</li>
+                <li><strong>Difficulty (D):</strong> 1-10 scale indicating card difficulty</li>
+                <li><strong>Interval:</strong> Days until next review, calculated from stability</li>
+                <li><strong>Lapses:</strong> Count of times the card was forgotten</li>
+                <li><strong>Binary Grading:</strong> Simplified to Again (failed) or Good (passed)</li>
+            </ul>
+        </div>
+        
+        <div class="feature">
+            <h3>Data Persistence</h3>
+            <ul>
+                <li><strong>User Data:</strong> Stored in <code>data/users/{username}/{deck_name}/</code></li>
+                <li><strong>Card Metadata:</strong> JSON file with FSRS-6 parameters per card</li>
+                <li><strong>Deck Metadata:</strong> JSON file with daily limits and progress</li>
+                <li><strong>CSV Updates:</strong> hiragana.csv updated with state and lastSeen</li>
+            </ul>
+        </div>
+        
+        <div class="feature">
+            <h3>File Structure</h3>
+            <ul>
+                <li><code>flashcard_app.py</code> - Main application controller</li>
+                <li><code>models.py</code> - Data models (Card, DeckMetadata)</li>
+                <li><code>fsrs.py</code> - FSRS-6 scheduler implementation</li>
+                <li><code>persistence.py</code> - Data persistence layer</li>
+                <li><code>gui.py</code> - Tkinter GUI components</li>
+                <li><code>test_app.py</code> - Unit tests</li>
+            </ul>
+        </div>
+        
+        <div class="feature">
+            <h3>Usage</h3>
+            <p>Run the application:</p>
+            <code>python3 flashcard_app.py</code>
+            <p style="margin-top: 10px;">Run tests:</p>
+            <code>python3 test_app.py</code>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Requirements Met</h2>
+        <ul>
+            <li>✅ Single scheduler (FSRS-6 only, no dropdown)</li>
+            <li>✅ Binary grading (Again/Good buttons)</li>
+            <li>✅ Per-card metadata: S, D, interval_days, lapses</li>
+            <li>✅ Global deck metadata: max_per_day, daily counts, flags</li>
+            <li>✅ Persistence to data/users/{user}/{deck}/</li>
+            <li>✅ Uses existing hiragana.csv with columns: front, back, state, lastSeen</li>
+            <li>✅ Login/user selection screen</li>
+            <li>✅ Main menu with progress overview</li>
+            <li>✅ Practice view with flashcards</li>
+            <li>✅ Stats/insights view</li>
+        </ul>
+    </div>
+
+    <div class="section" style="background: #d4edda; border-left: 4px solid #28a745;">
+        <h2>✅ Implementation Complete</h2>
+        <p>The Japanese Flashcard App with FSRS-6 scheduler has been successfully implemented with all required features. The application is ready to use for learning Japanese hiragana characters with an intelligent spaced repetition system.</p>
+    </div>
+</body>
+</html>
